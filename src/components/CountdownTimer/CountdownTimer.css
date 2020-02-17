@@ -3,6 +3,21 @@
     font-size: 1.2em;
   }
   
-  #countdownText {
-    font-size: 3em;
+
+
+  .countdownTable {
+    margin: 0px auto;
+    font-family: Georgia;
+    font-variant: small-caps;
+  }
+
+  .countdownValues td {
+    font-size: 1.5em;
+  }
+
+  .countdownLabels td {
+    font-size: 1em;
+  }
+  .countdownTable td {
+    padding: 5px;
   }
