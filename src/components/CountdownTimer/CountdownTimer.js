@@ -7,12 +7,17 @@ class CountdownTimer extends React.Component {
         super(props);
           
         this.state = {
+            eventName: null,
             interval: null,
             countdownStarted: false,
             daysRemaining: 0,
             hoursRemaining: 0,
             minutesRemaining: 0,
-            secondsRemaining: 0
+            secondsRemaining: 0,
+            daysInput: 0,
+            hoursInput: 0,
+            minutesInput: 0,
+            secondsInput: 0
         }
      }
      
@@ -29,7 +34,7 @@ class CountdownTimer extends React.Component {
             let days = Math.floor(distance / (1000 * 60 * 60 * 24));
             let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((distance % (1000 * 60)) / 1000)-1;
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
             return({distance: distance, days: days, hours: hours, minutes: minutes, seconds: seconds});
         }
 
@@ -40,7 +45,13 @@ class CountdownTimer extends React.Component {
             // Clone the start date object
             counter.endTime = new Date(dateVal.getTime());
             // Set the end time to be + the number of minutes to countdown by
-            counter.endTime.setMinutes(counter.endTime.getMinutes()+10);
+            let daysAdded = this.state.daysInput*24*60*60*1000;
+            let hoursAdded = this.state.hoursInput*60*60*1000;
+            let minutesAdded = this.state.minutesInput*60*1000;
+            let secondsAdded = this.state.secondsInput*1000;
+            let totalAdded = daysAdded + hoursAdded + minutesAdded + secondsAdded;
+            counter.endTime.setTime(counter.endTime.getTime() + (totalAdded));
+
                 var interval = setInterval(() => {
                 console.log(`Starting interval id:`,interval);
                 let displayDelay = 1;
@@ -70,26 +81,46 @@ class CountdownTimer extends React.Component {
             
             
                 <div>
-                    <table className="countdownTable">
+                    <table className="countdownTable" 
+                    /*
+                    style={{backgroundColor:`rgb(${255-this.state.secondsRemaining*4},${128-this.state.secondsRemaining*2},${this.state.secondsRemaining*4})`}}
+                    */
+                   >
                         <tbody>
+                            {this.state.countdownStarted ? (
                             <tr className="countdownValues">
                                 <td>{this.state.daysRemaining.toString().padStart(2, '0')}</td>
+                                <td>:</td>
                                 <td>{this.state.hoursRemaining.toString().padStart(2, '0')}</td>
+                                <td>:</td>
                                 <td>{this.state.minutesRemaining.toString().padStart(2, '0')}</td>
+                                <td>:</td>
                                 <td>{this.state.secondsRemaining.toString().padStart(2, '0')}</td>
                             </tr>
+                            ) : (
+                                <tr className="countdownInputs">
+                                    <td><input type="text" value={this.state.daysInput} onChange={(e) => {this.setState({daysInput: e.target.value})}} /></td>
+                                    <td>:</td>
+                                    <td><input type="text" value={this.state.hoursInput} onChange={(e) => {this.setState({hoursInput: e.target.value})}} /></td>
+                                    <td>:</td>
+                                    <td><input type="text" value={this.state.minutesInput} onChange={(e) => {this.setState({minutesInput: e.target.value})}} /></td>
+                                    <td>:</td>
+                                    <td><input type="text" value={this.state.secondsInput} onChange={(e) => {this.setState({secondsInput: e.target.value})}} /></td>
+                                </tr>
+                            )}
                             <tr className="countdownLabels">
                                 <td>Days</td>
+                                <td></td>
                                 <td>Hours</td>
+                                <td></td>
                                 <td>Minutes</td>
+                                <td></td>
                                 <td>Seconds</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                
-                
-                {this.state.countdownStarted ? (<div></div>) :(<div></div>)}
+            
 
             
                 

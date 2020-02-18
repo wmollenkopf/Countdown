@@ -15,6 +15,20 @@
     font-size: 1.5em;
   }
 
+  .countdownInputs td input {
+    width: 30px;
+    text-align: center;
+    font-size: 1.5em;
+    font-family: Georgia;
+    font-variant: small-caps;
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+  .countdownInputs td {
+    text-align: center;
+  }
+
   .countdownLabels td {
     font-size: 1em;
   }
